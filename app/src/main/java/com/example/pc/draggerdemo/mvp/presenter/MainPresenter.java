@@ -6,7 +6,6 @@ import com.example.pc.draggerdemo.api.NetworkInterface;
 import com.example.pc.draggerdemo.base.BasePresenter;
 import com.example.pc.draggerdemo.mvp.model.NewsResponse;
 import com.example.pc.draggerdemo.mvp.view.IMainView;
-import com.google.gson.Gson;
 
 import javax.inject.Inject;
 
@@ -28,6 +27,7 @@ public class MainPresenter extends BasePresenter<IMainView> implements Observer<
 
 
     public void getNews() {
+        Log.e("sadfsaf", "safasfasdfsa");
         getMainView().onShowProgressDialog("Loading Comlete....");
         Observable<NewsResponse> cakesResponseObservable = mNetworkInterface.getNewsResponse();
         subscribe(cakesResponseObservable, this);

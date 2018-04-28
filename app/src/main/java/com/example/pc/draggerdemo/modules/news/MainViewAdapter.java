@@ -1,10 +1,8 @@
-package com.example.pc.draggerdemo.modules;
+package com.example.pc.draggerdemo.modules.news;
 
 import android.app.Activity;
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.net.Uri;
-import android.provider.SyncStateContract;
 import android.support.annotation.IntRange;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,8 +36,8 @@ public class MainViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     ArrayList<NewsResponseContent> mObjectArrayList = new ArrayList<>();
     int mObjectListSize = 0;
     Activity mActivity;
-    private MediaController mediaControls;
     Context mContext;
+    private MediaController mediaControls;
 
     public MainViewAdapter(Activity mActivity, Context context) {
         this.mActivity = mActivity;
@@ -227,12 +225,10 @@ public class MainViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class VideoViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.layout_video_viewholder_title)
-        TextView mTitleView;
-
         @BindView(R.id.video_view)
         public VideoView mVideoView;
-
+        @BindView(R.id.layout_video_viewholder_title)
+        TextView mTitleView;
         @BindView(R.id.layout_video_viewholder_description)
         TextView mDescriptionView;
 

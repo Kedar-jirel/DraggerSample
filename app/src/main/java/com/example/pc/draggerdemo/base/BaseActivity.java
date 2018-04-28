@@ -32,10 +32,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @CallSuper
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
-        resolveDependencies();
+        changeFragment();
     }
 
-    protected void resolveDependencies() {
+    protected void changeFragment() {
 
     }
 

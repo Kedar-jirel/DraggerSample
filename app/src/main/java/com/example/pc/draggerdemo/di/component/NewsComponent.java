@@ -1,8 +1,8 @@
 package com.example.pc.draggerdemo.di.component;
 
-import com.example.pc.draggerdemo.modules.MainActivity;
 import com.example.pc.draggerdemo.di.module.NewsModule;
 import com.example.pc.draggerdemo.di.scope.PerActivity;
+import com.example.pc.draggerdemo.modules.news.MainFragment;
 
 import dagger.Component;
 
@@ -13,5 +13,5 @@ import dagger.Component;
 @PerActivity
 @Component(modules = NewsModule.class, dependencies = ApplicationComponent.class)
 public interface NewsComponent {
-    void inject(MainActivity activity);
+    void inject(MainFragment mainFragment);
 }
