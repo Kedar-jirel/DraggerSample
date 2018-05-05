@@ -84,6 +84,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mSnackBar.show();
     }
 
+    @Override
+    protected void reloadView() {
+        changeFragment(new NewsFragment());
+    }
+
 
     private void changeFragment(Fragment newsFragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_dashboard_container, newsFragment).commitAllowingStateLoss();

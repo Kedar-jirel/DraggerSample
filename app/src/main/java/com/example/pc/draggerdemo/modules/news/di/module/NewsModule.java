@@ -2,6 +2,8 @@ package com.example.pc.draggerdemo.modules.news.di.module;
 
 import com.example.pc.draggerdemo.api.NetworkInterface;
 import com.example.pc.draggerdemo.base.di.scope.PerActivity;
+import com.example.pc.draggerdemo.modules.news.mvp.interactor.INewsInteractorImpl;
+import com.example.pc.draggerdemo.modules.news.mvp.interactor.INewsIntractor;
 import com.example.pc.draggerdemo.modules.news.mvp.view.INewsView;
 
 import javax.inject.Inject;
@@ -35,5 +37,11 @@ public class NewsModule {
     @Provides
     INewsView providesMainView() {
         return mainView;
+    }
+
+    @PerActivity
+    @Provides
+    INewsIntractor  provideNewsInteractor(){
+        return new INewsInteractorImpl(mainView);
     }
 }

@@ -54,7 +54,7 @@ public class SharedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public int getItemViewType(int position) {
         int TYPE = 0;
         if (mObjectArrayList.get(position) instanceof NewsResponseContent) {
-            switch ((mObjectArrayList.get(position).getMType())) {
+            switch ((mObjectArrayList.get(position).getType())) {
                 case Constants.VIDEO:
                     TYPE = VIDEO_TYPE;
                     break;
@@ -115,21 +115,21 @@ public class SharedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private void configureViewImageViewHolder(ImageViewHolder holder, int position) {
         if (mObjectArrayList.get(position).getData() instanceof NewsResponseContentData) {
             NewsResponseContentData mImageContent = (NewsResponseContentData) mObjectArrayList.get(position).getData();
-            holder.mImageTitleView.setText(mImageContent.getMTitle());
-            holder.mImageDescriptionView.setText(mImageContent.getMDescription());
-            Picasso.with(mActivity).load(mImageContent.getMUrl()).into(holder.mImageComtentView);
+            holder.mImageTitleView.setText(mImageContent.getTitle());
+            holder.mImageDescriptionView.setText(mImageContent.getDescription());
+            Picasso.with(mActivity).load(mImageContent.getUrl()).into(holder.mImageComtentView);
         }
     }
 
 
     private void configureVideoViewHolder(final VideoViewHolder holder, int position) {
         NewsResponseContentData video = (NewsResponseContentData) mObjectArrayList.get(position).getData();
-        holder.mTitleView.setText(video.getMTitle());
-        holder.mDescriptionView.setText(video.getMDescription());
+        holder.mTitleView.setText(video.getTitle());
+        holder.mDescriptionView.setText(video.getDescription());
 
 
         try {
-            holder.mVideoView.setVideoURI(Uri.parse(video.getMUrl()));
+            holder.mVideoView.setVideoURI(Uri.parse(video.getUrl()));
             holder.mVideoView.setVolume(Float.parseFloat("0.50"));
             holder.mVideoView.setOnPreparedListener(new OnPreparedListener() {
                 @Override

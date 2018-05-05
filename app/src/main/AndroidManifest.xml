@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.pc.draggerdemo">
 
-
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -21,11 +19,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".modules.main.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <receiver
@@ -37,6 +30,13 @@
                     tools:ignore="BatteryLife" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".base.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

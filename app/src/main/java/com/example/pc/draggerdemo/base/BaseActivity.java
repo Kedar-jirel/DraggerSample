@@ -76,8 +76,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Connecti
     private void showSnack(boolean isConnected) {
         if (isConnected) {
             showInternetStauts("Welcome,You are online", Color.GREEN);
+            reloadView();
         } else {
-            showInternetStauts("Sorry, Your device seems to be offline",Color.RED);
+            showInternetStauts("Sorry, Your device seems to be offline", Color.RED);
 
         }
     }
@@ -94,4 +95,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Connecti
     }
 
     protected abstract void showInternetStauts(String s, int red);
+
+    protected abstract void reloadView();
 }

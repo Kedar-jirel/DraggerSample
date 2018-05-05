@@ -12,13 +12,15 @@ import android.widget.Toast;
 
 import com.example.pc.draggerdemo.R;
 import com.example.pc.draggerdemo.modules.news.di.component.DaggerNewsComponent;
-import com.example.pc.draggerdemo.modules.news.mvp.model.NewsResponse;
 import com.example.pc.draggerdemo.modules.SharedAdapter;
 import com.example.pc.draggerdemo.modules.main.FragmentChangeListener;
 import com.example.pc.draggerdemo.modules.main.MainActivity;
 import com.example.pc.draggerdemo.modules.news.di.module.NewsModule;
+import com.example.pc.draggerdemo.modules.news.mvp.model.NewsResponseContent;
 import com.example.pc.draggerdemo.modules.news.mvp.presenter.NewsPresenter;
 import com.example.pc.draggerdemo.modules.news.mvp.view.INewsView;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -102,9 +104,9 @@ public class NewsFragment extends Fragment implements INewsView {
     }
 
     @Override
-    public void onLoadView(NewsResponse newsResponse) {
+    public void onLoadView(ArrayList<NewsResponseContent> newsResponse) {
         if (newsResponse != null) {
-            sharedAdapter.addAll(newsResponse.getContent());
+            sharedAdapter.addAll(newsResponse);
         }
 
     }
