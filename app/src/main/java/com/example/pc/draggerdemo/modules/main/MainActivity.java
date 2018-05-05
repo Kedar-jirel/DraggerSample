@@ -1,7 +1,9 @@
 package com.example.pc.draggerdemo.modules.main;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -13,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.pc.draggerdemo.R;
 import com.example.pc.draggerdemo.base.BaseActivity;
@@ -20,11 +23,17 @@ import com.example.pc.draggerdemo.base.di.component.ApplicationComponent;
 import com.example.pc.draggerdemo.modules.news.NewsFragment;
 import com.example.pc.draggerdemo.modules.sports.SportsFragment;
 
+import butterknife.BindView;
+
 /**
  * Created by PC on 4/28/2018.
  */
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentChangeListener {
+
+    @BindView(R.id.activity_main_coodinatorLayout)
+    CoordinatorLayout mView;
+
 
     @Override
     protected int getContentView() {
@@ -60,6 +69,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void changeFragment() {
         changeFragment(new NewsFragment());
+    }
+
+    @Override
+    protected void showInternetStauts(String message, int color) {
+
+        Snackbar mSnackBar = Snackbar.make(mView, message, Snackbar.LENGTH_LONG);
+        View view = mSnackBar.getView();
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) view.getLayoutParams();
+        view.setLayoutParams(params);
+        view.setBackgroundColor(color);
+        TextView mainTextView = (TextView) (view).findViewById(android.support.design.R.id.snackbar_text);
+        mainTextView.setTextColor(Color.WHITE);
+        mSnackBar.show();
     }
 
 
@@ -107,10 +129,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            changeFragment(new SportsFragment());
+        if (id == R.id.nav_dashboard) {
+            changeFragment(new NewsFragment());
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_sports) {
+            changeFragment(new SportsFragment());
 
         } else if (id == R.id.nav_slideshow) {
 

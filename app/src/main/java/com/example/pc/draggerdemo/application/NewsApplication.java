@@ -5,6 +5,7 @@ import android.app.Application;
 import com.example.pc.draggerdemo.base.di.component.ApplicationComponent;
 import com.example.pc.draggerdemo.base.di.component.DaggerApplicationComponent;
 import com.example.pc.draggerdemo.base.di.module.ApplicationModule;
+import com.example.pc.draggerdemo.extras.ConnectivityReceiver;
 
 /**
  * Created by PC on 1/2/2018.
@@ -12,11 +13,13 @@ import com.example.pc.draggerdemo.base.di.module.ApplicationModule;
 
 public class NewsApplication extends Application {
     ApplicationComponent mApplicationComponent;
+    private static NewsApplication mInstance;
 
     @Override
     public void onCreate() {
         super.onCreate();
         initializeDependencies();
+        mInstance = this;
     }
 
     private void initializeDependencies() {
@@ -33,5 +36,13 @@ public class NewsApplication extends Application {
 
     public ApplicationComponent getApplicationComponent() {
         return mApplicationComponent;
+    }
+
+    public static synchronized NewsApplication getInstance() {
+        return mInstance;
+    }
+
+    public void setConnectivityListener(ConnectivityReceiver.ConnectivityReceiverListener listener) {
+        ConnectivityReceiver.connectivityReceiverListener = listener;
     }
 }

@@ -25,6 +25,7 @@ public class NewsPresenter extends BasePresenter<INewsView> implements Observer<
 
 
     public void getNews() {
+        getMainView().onShowProgressDialog("Loading, Please wait....");
         Observable<NewsResponse> cakesResponseObservable = mNetworkInterface.getNewsResponse();
         subscribe(cakesResponseObservable, this);
     }
