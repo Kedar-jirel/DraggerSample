@@ -11,30 +11,31 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.pc.draggerdemo.R;
-import com.example.pc.draggerdemo.di.component.DaggerNewsComponent;
-import com.example.pc.draggerdemo.di.module.NewsModule;
+import com.example.pc.draggerdemo.modules.news.di.component.DaggerNewsComponent;
+import com.example.pc.draggerdemo.modules.news.mvp.model.NewsResponse;
+import com.example.pc.draggerdemo.modules.SharedAdapter;
 import com.example.pc.draggerdemo.modules.main.FragmentChangeListener;
 import com.example.pc.draggerdemo.modules.main.MainActivity;
-import com.example.pc.draggerdemo.mvp.model.NewsResponse;
-import com.example.pc.draggerdemo.mvp.presenter.MainPresenter;
-import com.example.pc.draggerdemo.mvp.view.IMainView;
+import com.example.pc.draggerdemo.modules.news.di.module.NewsModule;
+import com.example.pc.draggerdemo.modules.news.mvp.presenter.NewsPresenter;
+import com.example.pc.draggerdemo.modules.news.mvp.view.INewsView;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainFragment extends Fragment implements IMainView {
+public class NewsFragment extends Fragment implements INewsView {
 
     @Inject
-    protected MainPresenter mPresenter;
+    protected NewsPresenter mPresenter;
     @BindView(R.id.activity_main_rv)
     RecyclerView mRecyclerView;
     FragmentChangeListener fragmentChangeListener;
-    private MainViewAdapter mainViewAdapter;
+    private SharedAdapter sharedAdapter;
 
 
-    public MainFragment() {
+    public NewsFragment() {
     }
 
     @Override
@@ -62,10 +63,10 @@ public class MainFragment extends Fragment implements IMainView {
     }
 
     private void initlizeAdapter() {
-        mainViewAdapter = new MainViewAdapter(getActivity(), getContext());
+        sharedAdapter = new SharedAdapter(getActivity(), getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(mainViewAdapter);
+        mRecyclerView.setAdapter(sharedAdapter);
 
     }
 
@@ -75,12 +76,12 @@ public class MainFragment extends Fragment implements IMainView {
 
     protected void resolveDependencies() {
 
-        Toast.makeText(getContext(), "Reached to the Fragment", Toast.LENGTH_SHORT).show();
         DaggerNewsComponent.builder()
                 .applicationComponent(fragmentChangeListener.getMainComponent())
-                .newsModule(new NewsModule((IMainView) this))
+                .newsModule(new NewsModule((INewsView) this))
                 .build()
                 .inject(this);
+
     }
 
     @Override
@@ -103,8 +104,9 @@ public class MainFragment extends Fragment implements IMainView {
     @Override
     public void onLoadView(NewsResponse newsResponse) {
         if (newsResponse != null) {
-            mainViewAdapter.addAll(newsResponse.getContent());
+            sharedAdapter.addAll(newsResponse.getContent());
         }
 
     }
 }
+

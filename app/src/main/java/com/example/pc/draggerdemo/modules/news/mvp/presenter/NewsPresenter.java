@@ -1,11 +1,9 @@
-package com.example.pc.draggerdemo.mvp.presenter;
-
-import android.util.Log;
+package com.example.pc.draggerdemo.modules.news.mvp.presenter;
 
 import com.example.pc.draggerdemo.api.NetworkInterface;
 import com.example.pc.draggerdemo.base.BasePresenter;
-import com.example.pc.draggerdemo.mvp.model.NewsResponse;
-import com.example.pc.draggerdemo.mvp.view.IMainView;
+import com.example.pc.draggerdemo.modules.news.mvp.model.NewsResponse;
+import com.example.pc.draggerdemo.modules.news.mvp.view.INewsView;
 
 import javax.inject.Inject;
 
@@ -16,19 +14,17 @@ import rx.Observer;
  * Created by PC on 1/2/2018.
  */
 
-public class MainPresenter extends BasePresenter<IMainView> implements Observer<NewsResponse> {
+public class NewsPresenter extends BasePresenter<INewsView> implements Observer<NewsResponse> {
 
     @Inject
     NetworkInterface mNetworkInterface;
 
     @Inject
-    public MainPresenter() {
+    public NewsPresenter() {
     }
 
 
     public void getNews() {
-        Log.e("sadfsaf", "safasfasdfsa");
-        getMainView().onShowProgressDialog("Loading Comlete....");
         Observable<NewsResponse> cakesResponseObservable = mNetworkInterface.getNewsResponse();
         subscribe(cakesResponseObservable, this);
     }
@@ -36,7 +32,6 @@ public class MainPresenter extends BasePresenter<IMainView> implements Observer<
     @Override
     public void onCompleted() {
         getMainView().onHideProgresDialog();
-        getMainView().onShowToast("Loading Completed....");
     }
 
     @Override
@@ -48,9 +43,9 @@ public class MainPresenter extends BasePresenter<IMainView> implements Observer<
 
     @Override
     public void onNext(NewsResponse newsResponse) {
-        if(newsResponse!=null){
+        if (newsResponse != null) {
             getMainView().onLoadView(newsResponse);
-        }else {
+        } else {
             getMainView().onShowToast("Null Response fram the server");
         }
 

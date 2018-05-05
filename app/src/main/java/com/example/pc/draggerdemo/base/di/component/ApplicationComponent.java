@@ -1,8 +1,8 @@
-package com.example.pc.draggerdemo.di.component;
+package com.example.pc.draggerdemo.base.di.component;
 
 import android.content.Context;
 
-import com.example.pc.draggerdemo.di.module.ApplicationModule;
+import com.example.pc.draggerdemo.base.di.module.ApplicationModule;
 
 import javax.inject.Singleton;
 

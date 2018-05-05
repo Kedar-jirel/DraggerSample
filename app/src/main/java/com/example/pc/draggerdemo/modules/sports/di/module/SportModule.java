@@ -1,10 +1,9 @@
-package com.example.pc.draggerdemo.di.module;
-
-import android.net.Network;
+package com.example.pc.draggerdemo.modules.sports.di.module;
 
 import com.example.pc.draggerdemo.api.NetworkInterface;
-import com.example.pc.draggerdemo.di.scope.PerActivity;
-import com.example.pc.draggerdemo.mvp.view.IMainView;
+import com.example.pc.draggerdemo.base.di.scope.PerActivity;
+import com.example.pc.draggerdemo.modules.news.mvp.view.INewsView;
+import com.example.pc.draggerdemo.modules.sports.mvp.view.ISportsView;
 
 import javax.inject.Inject;
 
@@ -13,17 +12,17 @@ import dagger.Provides;
 import retrofit2.Retrofit;
 
 /**
- * Created by PC on 12/31/2017.
+ * Created by PC on 4/28/2018.
  */
 
 @Module
-public class NewsModule {
+public class SportModule {
 
-    protected IMainView mainView;
+    protected ISportsView mainView;
 
 
     @Inject
-    public NewsModule(IMainView mainView) {
+    public SportModule(ISportsView mainView) {
         this.mainView = mainView;
     }
 
@@ -33,9 +32,10 @@ public class NewsModule {
         return retrofit.create(NetworkInterface.class);
     }
 
+
     @PerActivity
     @Provides
-    IMainView providesMainView() {
+    ISportsView providesMainView() {
         return mainView;
     }
 }

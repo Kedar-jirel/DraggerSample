@@ -1,6 +1,7 @@
-package com.example.pc.draggerdemo.mvp.model;
+package com.example.pc.draggerdemo.modules.sports.mvp.model;
 
-public class NewsResponseContentData {
+public class SportsResponseContentData implements java.io.Serializable {
+    private static final long serialVersionUID = 2898276832124512383L;
     private String mUrl;
     private String mTitle;
     private String mDate;

@@ -1,4 +1,4 @@
-package com.example.pc.draggerdemo.mvp.model;
+package com.example.pc.draggerdemo.modules.news.mvp.model;
 
 public class NewsResponseContent {
     private NewsResponseContentData data;

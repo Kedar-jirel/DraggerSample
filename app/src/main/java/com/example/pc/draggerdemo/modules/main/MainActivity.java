@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,8 +16,9 @@ import android.view.View;
 
 import com.example.pc.draggerdemo.R;
 import com.example.pc.draggerdemo.base.BaseActivity;
-import com.example.pc.draggerdemo.di.component.ApplicationComponent;
-import com.example.pc.draggerdemo.modules.news.MainFragment;
+import com.example.pc.draggerdemo.base.di.component.ApplicationComponent;
+import com.example.pc.draggerdemo.modules.news.NewsFragment;
+import com.example.pc.draggerdemo.modules.sports.SportsFragment;
 
 /**
  * Created by PC on 4/28/2018.
@@ -57,12 +59,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void changeFragment() {
-        changeFragment(new MainFragment());
+        changeFragment(new NewsFragment());
     }
 
 
-    private void changeFragment(MainFragment mainFragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_dashboard_container, mainFragment).commitAllowingStateLoss();
+    private void changeFragment(Fragment newsFragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_dashboard_container, newsFragment).commitAllowingStateLoss();
     }
 
 
@@ -106,6 +108,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
+            changeFragment(new SportsFragment());
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 

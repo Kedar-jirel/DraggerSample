@@ -1,4 +1,4 @@
-package com.example.pc.draggerdemo.di.scope;
+package com.example.pc.draggerdemo.base.di.scope;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

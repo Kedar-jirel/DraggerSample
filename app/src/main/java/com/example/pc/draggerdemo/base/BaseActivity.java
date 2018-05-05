@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.pc.draggerdemo.application.NewsApplication;
-import com.example.pc.draggerdemo.di.component.ApplicationComponent;
+import com.example.pc.draggerdemo.base.di.component.ApplicationComponent;
 
 import butterknife.ButterKnife;
 

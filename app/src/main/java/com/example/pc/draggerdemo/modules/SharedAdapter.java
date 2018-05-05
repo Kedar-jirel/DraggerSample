@@ -1,10 +1,11 @@
-package com.example.pc.draggerdemo.modules.news;
+package com.example.pc.draggerdemo.modules;
 
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.IntRange;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,9 @@ import com.devbrackets.android.exomedia.ui.widget.VideoControls;
 import com.devbrackets.android.exomedia.ui.widget.VideoView;
 import com.example.pc.draggerdemo.R;
 import com.example.pc.draggerdemo.extras.Constants;
-import com.example.pc.draggerdemo.mvp.model.NewsResponseContent;
-import com.example.pc.draggerdemo.mvp.model.NewsResponseContentData;
+import com.example.pc.draggerdemo.modules.news.mvp.model.NewsResponseContent;
+import com.example.pc.draggerdemo.modules.news.mvp.model.NewsResponseContentData;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ import butterknife.ButterKnife;
  * Created by sanjay on 4/26/2017.
  */
 
-public class MainViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SharedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int VIDEO_TYPE = 0, TEXT_TYPE = 1, IMAGE_TYPE = 2;
     ArrayList<NewsResponseContent> mObjectArrayList = new ArrayList<>();
@@ -39,7 +41,7 @@ public class MainViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     Context mContext;
     private MediaController mediaControls;
 
-    public MainViewAdapter(Activity mActivity, Context context) {
+    public SharedAdapter(Activity mActivity, Context context) {
         this.mActivity = mActivity;
         this.mContext = context;
         if (mediaControls == null) {
@@ -111,10 +113,12 @@ public class MainViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     private void configureViewImageViewHolder(ImageViewHolder holder, int position) {
-        NewsResponseContentData mImageContent = (NewsResponseContentData) mObjectArrayList.get(position).getData();
-        holder.mImageTitleView.setText(mImageContent.getMTitle());
-        holder.mImageDescriptionView.setText(mImageContent.getMDescription());
-        Picasso.with(mActivity).load(mImageContent.getMUrl()).into(holder.mImageComtentView);
+        if (mObjectArrayList.get(position).getData() instanceof NewsResponseContentData) {
+            NewsResponseContentData mImageContent = (NewsResponseContentData) mObjectArrayList.get(position).getData();
+            holder.mImageTitleView.setText(mImageContent.getMTitle());
+            holder.mImageDescriptionView.setText(mImageContent.getMDescription());
+            Picasso.with(mActivity).load(mImageContent.getMUrl()).into(holder.mImageComtentView);
+        }
     }
 
 
@@ -208,9 +212,9 @@ public class MainViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
     public void addAll(ArrayList<NewsResponseContent> commonObjectArrayList) {
+        Log.e("safsaf", new Gson().toJson(commonObjectArrayList));
         mObjectArrayList.addAll(commonObjectArrayList);
         notifyDataSetChanged();
-
     }
 
     public NewsResponseContent getItem(int position) {

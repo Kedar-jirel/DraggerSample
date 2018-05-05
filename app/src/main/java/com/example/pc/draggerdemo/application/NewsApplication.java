@@ -2,9 +2,9 @@ package com.example.pc.draggerdemo.application;
 
 import android.app.Application;
 
-import com.example.pc.draggerdemo.di.component.ApplicationComponent;
-import com.example.pc.draggerdemo.di.component.DaggerApplicationComponent;
-import com.example.pc.draggerdemo.di.module.ApplicationModule;
+import com.example.pc.draggerdemo.base.di.component.ApplicationComponent;
+import com.example.pc.draggerdemo.base.di.component.DaggerApplicationComponent;
+import com.example.pc.draggerdemo.base.di.module.ApplicationModule;
 
 /**
  * Created by PC on 1/2/2018.

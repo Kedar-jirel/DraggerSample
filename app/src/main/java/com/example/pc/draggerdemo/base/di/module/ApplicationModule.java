@@ -1,4 +1,4 @@
-package com.example.pc.draggerdemo.di.module;
+package com.example.pc.draggerdemo.base.di.module;
 
 import android.content.Context;
 
