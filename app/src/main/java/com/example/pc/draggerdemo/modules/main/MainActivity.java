@@ -1,5 +1,6 @@
 package com.example.pc.draggerdemo.modules.main;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.example.pc.draggerdemo.R;
 import com.example.pc.draggerdemo.base.BaseActivity;
 import com.example.pc.draggerdemo.base.di.component.ApplicationComponent;
+import com.example.pc.draggerdemo.camera.CamActivity;
 import com.example.pc.draggerdemo.modules.news.NewsFragment;
 import com.example.pc.draggerdemo.modules.sports.SportsFragment;
 
@@ -47,7 +49,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onViewReady(savedInstanceState, intent);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +92,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         changeFragment(new NewsFragment());
     }
 
+    @Override
+    public void onPermissionGrantedd(int requestCode) {
+
+    }
+
 
     private void changeFragment(Fragment newsFragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_dashboard_container, newsFragment).commitAllowingStateLoss();
@@ -127,6 +133,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            startActivity(new Intent(this, CamActivity.class));
+            finish();
+
             return true;
         }
 
