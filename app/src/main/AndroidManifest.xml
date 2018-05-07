@@ -9,6 +9,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
 
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".application.NewsApplication"
         android:allowBackup="true"
@@ -18,8 +24,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".modules.main.MainActivity">
-        </activity>
+        <activity
+            android:name=".modules.main.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"></activity>
 
         <receiver
             android:name=".extras.ConnectivityReceiver"
@@ -37,6 +44,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

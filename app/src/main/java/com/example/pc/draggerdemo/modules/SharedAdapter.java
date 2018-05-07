@@ -2,8 +2,6 @@ package com.example.pc.draggerdemo.modules;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
-import android.support.annotation.IntRange;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,20 +11,21 @@ import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
 
-import com.devbrackets.android.exomedia.listener.OnPreparedListener;
-import com.devbrackets.android.exomedia.ui.widget.VideoControls;
-import com.devbrackets.android.exomedia.ui.widget.VideoView;
+import com.bumptech.glide.Glide;
 import com.example.pc.draggerdemo.R;
 import com.example.pc.draggerdemo.extras.Constants;
 import com.example.pc.draggerdemo.modules.news.mvp.model.NewsResponseContent;
 import com.example.pc.draggerdemo.modules.news.mvp.model.NewsResponseContentData;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.jzvd.JZUserAction;
+import cn.jzvd.JZUserActionStandard;
+import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.JZVideoPlayerStandard;
 
 /**
  * Created by sanjay on 4/26/2017.
@@ -127,92 +126,14 @@ public class SharedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         holder.mTitleView.setText(video.getTitle());
         holder.mDescriptionView.setText(video.getDescription());
 
-
-        try {
-            holder.mVideoView.setVideoURI(Uri.parse(video.getUrl()));
-            holder.mVideoView.setVolume(Float.parseFloat("0.50"));
-            holder.mVideoView.setOnPreparedListener(new OnPreparedListener() {
-                @Override
-                public void onPrepared() {
-                    holder.mVideoView.start();
-
-                }
-            });
-
-            holder.mVideoView.setControls(new VideoControls(mActivity) {
-                @Override
-                public void setPosition(@IntRange(from = 0L) long position) {
-
-                }
-
-                @Override
-                public void setDuration(@IntRange(from = 0L) long duration) {
-
-                }
-
-                @Override
-                public void updateProgress(@IntRange(from = 0L) long position, @IntRange(from = 0L) long duration, @IntRange(from = 0L, to = 100L) int bufferPercent) {
-
-                }
-
-                @Override
-                protected int getLayoutResource() {
-                    return 0;
-                }
-
-                @Override
-                protected void animateVisibility(boolean toVisible) {
-
-                }
-
-                @Override
-                protected void updateTextContainerVisibility() {
-
-                }
-
-                @Override
-                public void showLoading(boolean initialLoad) {
-
-                }
-
-                @Override
-                public void finishLoading() {
-                    holder.mVideoView.start();
-                }
-            });
-
-        } catch (Exception ioe) {
-            //ignore
-        }
-
-//        try {
-//            setMediaController(mActivity, holder.mVideoView, video.getmUrl());
-//
-//            holder.mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//                @Override
-//                public void onCompletion(MediaPlayer mp) {
-//                }
-//            });
-//        } catch (Exception e) {
-//            // TODO: handle exception
-//            Toast.makeText(mActivity, "Error connecting", Toast.LENGTH_SHORT).show();
-//        }
+        holder.mVideoView.setUp(video.getUrl(), JZVideoPlayerStandard.SCREEN_LAYOUT_LIST, "My Public Video");
+        Glide.with(mActivity).load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png").into(holder.mVideoView.thumbImageView);
+        JZVideoPlayer.setJzUserAction(new MyUserActionStandard());
 
     }
 
-//
-//    private void setMediaController(Activity mActivity, VideoView mVideoView, String videoUrl) {
-//        MediaController mediaController = new MediaController(mActivity);
-//        mediaController.setAnchorView(mVideoView);
-//        Uri uri = Uri.parse(videoUrl);
-//        mVideoView.setMediaController(mediaController);
-//        mVideoView.setVideoURI(uri);
-//        mVideoView.start();
-//    }
-
 
     public void addAll(ArrayList<NewsResponseContent> commonObjectArrayList) {
-        Log.e("safsaf", new Gson().toJson(commonObjectArrayList));
         mObjectArrayList.addAll(commonObjectArrayList);
         notifyDataSetChanged();
     }
@@ -230,7 +151,7 @@ public class SharedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public class VideoViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.video_view)
-        public VideoView mVideoView;
+        public JZVideoPlayerStandard mVideoView;
         @BindView(R.id.layout_video_viewholder_title)
         TextView mTitleView;
         @BindView(R.id.layout_video_viewholder_description)
@@ -271,4 +192,62 @@ public class SharedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
+
+    class MyUserActionStandard implements JZUserActionStandard {
+
+        @Override
+        public void onEvent(int type, String url, int screen, Object... objects) {
+            switch (type) {
+                case JZUserAction.ON_CLICK_START_ICON:
+                    Log.i("USER_EVENT", "ON_CLICK_START_ICON" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
+                    break;
+                case JZUserAction.ON_CLICK_START_ERROR:
+                    Log.i("USER_EVENT", "ON_CLICK_START_ERROR" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
+                    break;
+                case JZUserAction.ON_CLICK_START_AUTO_COMPLETE:
+                    Log.i("USER_EVENT", "ON_CLICK_START_AUTO_COMPLETE" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
+                    break;
+                case JZUserAction.ON_CLICK_PAUSE:
+                    Log.i("USER_EVENT", "ON_CLICK_PAUSE" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
+                    break;
+                case JZUserAction.ON_CLICK_RESUME:
+                    Log.i("USER_EVENT", "ON_CLICK_RESUME" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
+                    break;
+                case JZUserAction.ON_SEEK_POSITION:
+                    Log.i("USER_EVENT", "ON_SEEK_POSITION" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
+                    break;
+                case JZUserAction.ON_AUTO_COMPLETE:
+                    Log.i("USER_EVENT", "ON_AUTO_COMPLETE" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
+                    break;
+                case JZUserAction.ON_ENTER_FULLSCREEN:
+                    Log.i("USER_EVENT", "ON_ENTER_FULLSCREEN" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
+                    break;
+                case JZUserAction.ON_QUIT_FULLSCREEN:
+                    Log.i("USER_EVENT", "ON_QUIT_FULLSCREEN" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
+                    break;
+                case JZUserAction.ON_ENTER_TINYSCREEN:
+                    Log.i("USER_EVENT", "ON_ENTER_TINYSCREEN" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
+                    break;
+                case JZUserAction.ON_QUIT_TINYSCREEN:
+                    Log.i("USER_EVENT", "ON_QUIT_TINYSCREEN" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
+                    break;
+                case JZUserAction.ON_TOUCH_SCREEN_SEEK_VOLUME:
+                    Log.i("USER_EVENT", "ON_TOUCH_SCREEN_SEEK_VOLUME" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
+                    break;
+                case JZUserAction.ON_TOUCH_SCREEN_SEEK_POSITION:
+                    Log.i("USER_EVENT", "ON_TOUCH_SCREEN_SEEK_POSITION" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
+                    break;
+
+                case JZUserActionStandard.ON_CLICK_START_THUMB:
+                    Log.i("USER_EVENT", "ON_CLICK_START_THUMB" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
+                    break;
+                case JZUserActionStandard.ON_CLICK_BLANK:
+                    Log.i("USER_EVENT", "ON_CLICK_BLANK" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
+                    break;
+                default:
+                    Log.i("USER_EVENT", "unknow");
+                    break;
+            }
+        }
+    }
 }

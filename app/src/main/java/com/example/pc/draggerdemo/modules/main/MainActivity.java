@@ -1,6 +1,7 @@
 package com.example.pc.draggerdemo.modules.main;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -34,6 +35,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @BindView(R.id.activity_main_coodinatorLayout)
     CoordinatorLayout mView;
 
+    int configuration;
 
     @Override
     protected int getContentView() {
@@ -101,7 +103,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (configuration == Configuration.ORIENTATION_LANDSCAPE) {
+
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -174,5 +180,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return this;
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            configuration = newConfig.orientation;
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+
+        }
+    }
 
 }
